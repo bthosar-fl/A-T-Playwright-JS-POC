@@ -1,0 +1,248 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "playwright---employee-user---create-an-absence;playwright---employee-user---create-an-absence",
+        "keyword": "Scenario",
+        "line": 2,
+        "name": "Playwright - Employee User - create an Absence",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1096586099
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 3,
+            "name": "Application is open in the browser",
+            "match": {
+              "location": "features\\stepDefinitions\\createAbsenceSteps.js:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1312269799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 4,
+            "name": "User logs in using \"appUsername\" and \"appPassword\"",
+            "match": {
+              "location": "features\\stepDefinitions\\createAbsenceSteps.js:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 8209938000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 5,
+            "name": "User is logged in successfully and is redirected to application homepage",
+            "match": {
+              "location": "features\\stepDefinitions\\createAbsenceSteps.js:18"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2945854900
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "User navigate from \"Reference Data\" menu option to \"Absence Reason\"",
+            "match": {
+              "location": "features\\stepDefinitions\\createAbsenceSteps.js:22"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 400010900
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 8,
+            "name": "User Create new \"AR_Test_6903\" with following \"Vacation\" \",\" and \"Public to Employee\"",
+            "match": {
+              "location": "features\\stepDefinitions\\createAbsenceSteps.js:32"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2785700200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 10,
+            "name": "User Logout from application and logged in again with \"appUsername\" \"appPassword\"",
+            "match": {
+              "location": "features\\stepDefinitions\\createAbsenceSteps.js:43"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4991510899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 12,
+            "name": "User navigate from \"Master Data\" menu option to \"Employee\" sub menu to \"General Information\"",
+            "match": {
+              "location": "features\\stepDefinitions\\createAbsenceSteps.js:48"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 8344965499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 13,
+            "name": "user creates employee with required details",
+            "match": {
+              "location": "features\\stepDefinitions\\createAbsenceSteps.js:55"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4069290499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 14,
+            "name": "Employee is created successfully",
+            "match": {
+              "location": "features\\stepDefinitions\\createAbsenceSteps.js:75"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 137836199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 15,
+            "name": "User Impersonate as Employee",
+            "match": {
+              "location": "features\\stepDefinitions\\createAbsenceSteps.js:80"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 14747584599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 16,
+            "name": "User navigate from \"Absences\" menu option to \"Create Absence\"",
+            "match": {
+              "location": "features\\stepDefinitions\\createAbsenceSteps.js:22"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1205119100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 18,
+            "name": "User Clicks on the Day Picker and Select Date as \"1\"",
+            "match": {
+              "location": "features\\stepDefinitions\\createAbsenceSteps.js:87"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 677286600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 19,
+            "name": "Employee Create new absence with following \"AR_Test_6903\" \"4\"",
+            "match": {
+              "location": "features\\stepDefinitions\\createAbsenceSteps.js:91"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 21040300
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 20,
+            "name": "User Will click on Create Absence button",
+            "match": {
+              "location": "features\\stepDefinitions\\createAbsenceSteps.js:95"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 76973399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 21,
+            "name": "Absence is created with the reason",
+            "match": {
+              "location": "features\\stepDefinitions\\createAbsenceSteps.js:99"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 237000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 22,
+            "name": "User End the Impersonation",
+            "match": {
+              "location": "features\\stepDefinitions\\createAbsenceSteps.js:103"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 130883499
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 287106700
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "playwright---employee-user---create-an-absence",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Playwright - Employee User - create an Absence",
+    "tags": [],
+    "uri": "features\\createAbsence.feature"
+  }
+]

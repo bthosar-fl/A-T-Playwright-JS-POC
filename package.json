@@ -1,0 +1,29 @@
+{
+  "name": "atplaywrightpoc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:cucumber": "cucumber-js --require features --format progress",
+    "test:feature": "cucumber-js features/createAbsence.feature --format progress --format html:reports/cucumber-report.html",
+    "test:report": "cucumber-js features/createAbsence.feature --require features/**/*.js --require support/**/*.js --format progress --format json:reports/cucumber-report.json",
+    "report:generate": "node generate-report.js",
+    "report:run": "node run-tests.js",
+    "ai:plan": "node ai-agents/planner/index.js",
+    "ai:generate": "node ai-agents/generator/index.js",
+    "ai:heal": "node ai-agents/healer/index.js",
+    "ai:heal:dry": "node ai-agents/healer/index.js --dry-run",
+    "ai:pipeline": "node ai-agents/orchestrator/index.js",
+    "ai:pipeline:plan-gen": "node ai-agents/orchestrator/index.js --steps=plan,generate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@cucumber/cucumber": "^8.8.0",
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.1",
+    "multiple-cucumber-html-reporter": "^3.10.0",
+    "playwright": "^1.60.0"
+  }
+}

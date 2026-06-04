@@ -1,0 +1,12 @@
+{
+  "name": "jira-mcp",
+  "description": "JIRA MCP Server for fetching stories and managing tickets",
+  "transport": "stdio",
+  "command": "npx",
+  "args": ["-y", "@anthropic/jira-mcp-server"],
+  "env": {
+    "JIRA_BASE_URL": "${JIRA_BASE_URL}",
+    "JIRA_EMAIL": "${JIRA_EMAIL}",
+    "JIRA_API_TOKEN": "${JIRA_API_TOKEN}"
+  }
+}

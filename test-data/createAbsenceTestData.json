@@ -1,0 +1,28 @@
+{
+  "login": {
+    "url": "https://aesempstage.flqa.net/",
+    "appUsername": "report_139963",
+    "appPassword": "Report!139963"
+  },
+  "absenceReason": {
+    "schoolLabel": "Global Logic STAGE Org 2",
+    "comboboxValue": "number:12"
+  },
+  "employee": {
+    "firstName": "6903",
+    "lastName": "AT_Test_6903",
+    "empId": "6903",
+    "wktId": "286907",
+    "listbox": "363323",
+    "homeInstId": "363323",
+    "email": "automationUser@gmail.com",
+    "gender": "Male",
+    "startDate": "09/24/2019",
+    "endDate": "09/25/2020",
+    "birthDate": "03/05/1993",
+    "phone": "9969438575",
+    "pin": "84913"
+    
+    
+  }
+}
