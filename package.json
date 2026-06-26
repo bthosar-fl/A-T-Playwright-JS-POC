@@ -19,10 +19,14 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "overrides": {
+    "commander": "~12.1.0"
+  },
   "devDependencies": {
-    "@cucumber/cucumber": "^8.8.0",
+    "@cucumber/cucumber": "^13.0.0",
     "@playwright/test": "^1.60.0",
     "@types/node": "^25.9.1",
+    "handlebars": "^4.7.8",
     "multiple-cucumber-html-reporter": "^3.10.0",
     "playwright": "^1.60.0"
   }

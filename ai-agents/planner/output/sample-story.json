@@ -1,0 +1,8 @@
+{
+  "key": "HCMAT-SAMPLE",
+  "summary": "Employee submits timeoff request",
+  "description": "As an employee, I want to submit a timeoff request so that my absence is tracked by the system.",
+  "acceptanceCriteria": "Scenario: Employee submits timeoff request\nGiven Application is open in the browser\nWhen User logs in using \"appUsername\" and \"appPassword\"\nThen User is logged in successfully and is redirected to application homepage\nAnd User navigate from \"Absences\" menu option to \"Create Absence\"\nAnd User Clicks on the Day Picker and Select Date as \"1\"\nAnd Employee Create new absence with following \"Vacation\" \"8\"\nAnd User Will click on Create Absence button\nThen Absence is created with the reason",
+  "labels": ["automation", "absence"],
+  "issueType": "Story"
+}

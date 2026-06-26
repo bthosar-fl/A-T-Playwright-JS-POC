@@ -1,3 +1,3 @@
 module.exports = {
-  default: `--require features/**/*.js --require support/**/*.js --format progress --publish-quiet`
+  default: `--require features/**/*.js --require support/**/*.js --format progress`
 };
