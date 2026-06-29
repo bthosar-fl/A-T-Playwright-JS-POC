@@ -2,7 +2,9 @@
   "login": {
     "url": "https://aesempstage.flqa.net/",
     "appUsername": "report_139963",
-    "appPassword": "Report!139963"
+    "appPassword": "Report!139963",
+    "reactAppUserName": "report_139963",
+    "reactAppPassword": "Report!139963"
   },
   "absenceReason": {
     "schoolLabel": "Global Logic STAGE Org 2",

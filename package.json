@@ -21,7 +21,7 @@
   "license": "ISC",
   "devDependencies": {
     "@cucumber/cucumber": "^8.8.0",
-    "@playwright/test": "^1.60.0",
+    "@playwright/test": "^1.61.0",
     "@types/node": "^25.9.1",
     "multiple-cucumber-html-reporter": "^3.10.0",
     "playwright": "^1.60.0"

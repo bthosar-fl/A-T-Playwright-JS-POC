@@ -12,7 +12,9 @@ Given('Application is open in the browser', async function () {
 });
 
 When('User logs in using {string} and {string}', async function (userKey, passKey) {
-  await this.loginPage.loginToApp(testData.login[userKey], testData.login[passKey]);
+  const username = testData.login[userKey] || testData.login.appUsername;
+  const password = testData.login[passKey] || testData.login.appPassword;
+  await this.loginPage.loginToApp(username, password);
 });
 
 Then('User is logged in successfully and is redirected to application homepage', async function () {
@@ -26,6 +28,10 @@ Then('User navigate from {string} menu option to {string}', async function (menu
   } else if (menu === 'Absences' && submenu === 'Create Absence') {
     this.absenceCreatePage = new AbsenceCreatePage(this.page);
     await this.absenceCreatePage.navigateToCreateAbsence();
+  } else if (menu === 'Absences' && submenu === 'Modify') {
+    await this.page.getByRole('menuitem', { name: 'Absences' }).waitFor({ state: 'visible', timeout: 20000 });
+    await this.page.getByRole('menuitem', { name: 'Absences' }).click();
+    await this.page.getByRole('link', { name: /Modify/i }).click();
   }
 });
 
