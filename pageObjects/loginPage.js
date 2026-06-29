@@ -1,9 +1,9 @@
 class LoginPage {
   constructor(page) {
     this.page = page;
-    this.usernameInput = page.getByRole('textbox', { name: 'ID or Username required' });
-    this.passwordInput = page.getByRole('textbox', { name: 'PIN or Password required' });
-    this.signInButton = page.getByRole('button', { name: 'Sign In Loading' });
+    this.usernameInput = page.getByRole('textbox', { name: 'Username' });
+    this.passwordInput = page.getByRole('textbox', { name: 'Password' });
+    this.signInButton = "//span[text()='Sign In']";
     this.userInfoButton = "//button[contains(@id,'user-info-title')]";
     this.logoutLink = "//a[contains(@class,'logout')]";
   }
@@ -24,7 +24,7 @@ class LoginPage {
   async loginToApp(username, password) {
     await this.usernameInput.fill(username);
     await this.passwordInput.fill(password);
-    await this.signInButton.click();
+    await this.page.locator(this.signInButton).click();
   }
 
   /**
