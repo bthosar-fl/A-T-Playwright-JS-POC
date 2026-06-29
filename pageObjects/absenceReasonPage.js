@@ -4,6 +4,8 @@ class AbsenceReasonPage extends BasePage {
   constructor(page) {
     super(page);
     this.addButtonText = 'Add Absence Reason';
+    this.deleteReasonButton = "//span[contains(@ng-click,'deleteItem')]";
+    this.yesDeleteButton = "//a[contains(text(),'Yes, Delete')]";
   }
 
   /**
@@ -51,8 +53,23 @@ async createReason({ name, schoolLabel, comboboxValue, makePublic }) {
  * @param {string} name - The name of the absence reason to verify.
  */
 async verifyReasonCreated(name) {
-  await this.page.getByRole('link', { name }).waitFor({ state: 'visible', timeout: 20000 });
-}
+  const locator = this.page.locator(`//span[contains(text(),'${name}')]`);
+  // If multiple links exist with same name, wait for the first visible one
+  await locator.first().waitFor({ state: 'visible', timeout: 20000 });
 }
 
+async deleteReason(name) {
+  // If the reason exists, delete it else do nothing
+  if (await this.page.locator(`//span[contains(text(),'${name}')]`).count() > 0) {
+    const count = await this.page.locator(`//span[contains(text(),'${name}')]`).count();
+    for (let i = 0; i < count; i++) {
+      await this.page.locator(`//span[contains(text(),'${name}')]`).nth(i).scrollIntoViewIfNeeded();
+      await this.page.locator(`//span[contains(text(),'${name}')]`).nth(i).click();
+      await this.page.locator(this.deleteReasonButton).click();
+      await this.page.locator(this.yesDeleteButton).click();
+      await this.page.waitForTimeout(2000);
+    }
+  }
+}
+}
 module.exports = AbsenceReasonPage;
