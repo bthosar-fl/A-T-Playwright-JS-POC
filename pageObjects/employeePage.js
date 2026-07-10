@@ -1,8 +1,16 @@
 const BasePage = require('./basePage');
+const AbsenceCreatePage = require('./absenceCreatePage');
+const { HomePage } = require('./homePage');
 
 class EmployeePage extends BasePage {
   constructor(page) {
     super(page);
+    this.searchEmployeeTextBox = "//input[@id='mask']";
+    this.goButton = "//input[@type='submit']";
+    this.removeButton = "//input[@name='Remove']";
+    this.absenceRequestErrorButton = "//em[contains(text(),'Before you can delete this Employee ')]";
+    this.allConfNumOfUnfillAbsence = "//em[text()='UnFilled']//parent::td//parent::tr//a[contains(@href,'absencemodify') and @class='ctx']";
+    this.deleteEmployeeSuccessMsg = "//em[text()='This Employee has been deleted.']";
   }
 
   /**
@@ -106,6 +114,59 @@ class EmployeePage extends BasePage {
   async loginAsUser() {
     await this.getByRole('link', { name: 'Log in as User' }).click();
   }
-}
 
+  async searchAndDeleteAbsence(lastName){
+    const searchLocator = this.page.locator(this.searchEmployeeTextBox);
+    await searchLocator.waitFor({ state: 'visible', timeout: 20000 });
+    await searchLocator.fill(lastName);
+    await this.page.locator(this.goButton).click();
+    // Capture all the absence id element and iterate in a loop
+    const context = this.page.context();
+    // Check if allConfNumOfUnfillAbsence locator exists before proceeding
+    const elements = await this.page.locator(this.allConfNumOfUnfillAbsence).elementHandles();
+    if (elements.length > 0) {
+      const confAbsenceList = await this.page.locator(this.allConfNumOfUnfillAbsence).all();
+      for (let i = 0; i < confAbsenceList.length; i++) {
+        await  this.page.locator(this.allConfNumOfUnfillAbsence).first().click();
+        this.absenceCreatePage = new AbsenceCreatePage(this.page);
+        await this.absenceCreatePage.deleteAbsence();
+        await this.page.waitForTimeout(2000);
+        for (let i = 0; i < confAbsenceList.length-1; i++) {
+          this.homePage = new HomePage(this.page);
+          await this.homePage.navigateToSubMenu('Master Data', 'Employee', 'Absence History');
+          const searchLocator = this.page.locator(this.searchEmployeeTextBox);
+          await searchLocator.waitFor({ state: 'visible', timeout: 20000 });
+          await searchLocator.fill(lastName);
+          await this.page.locator(this.goButton).click();
+          await this.page.waitForTimeout(2000);
+        }
+      }
+    }
+  }  
+  
+  async searchAndDeleteEmployee(lastName){
+    const searchLocator = this.page.locator(this.searchEmployeeTextBox);
+    await searchLocator.waitFor({ state: 'visible', timeout: 20000 });
+    await searchLocator.fill(lastName);
+    await this.page.locator(this.goButton).click();
+    // Check if remove button exists before proceeding
+    const removeButtonLocator = await this.page.locator(this.removeButton).first();
+    const isRemoveButtonVisible = await removeButtonLocator.isVisible();
+    if (isRemoveButtonVisible) {
+      const removeBtn = this.page.locator(this.removeButton).first();
+      await removeBtn.waitFor({ state: 'visible', timeout: 20000 });
+      await removeBtn.scrollIntoViewIfNeeded();
+      
+      // Set up dialog handler BEFORE clicking remove button (since click triggers the alert)
+      this.page.once('dialog', async dialog => {
+        console.log(dialog.message()); // Optional: logs the alert text
+        await dialog.accept();         // Simulates clicking "OK"
+      });
+      
+      await removeBtn.click();
+      await this.page.waitForTimeout(2000);
+      await this.page.locator(this.deleteEmployeeSuccessMsg).waitFor({ state: 'visible', timeout: 20000 });
+    }
+  }
+}
 module.exports = EmployeePage;

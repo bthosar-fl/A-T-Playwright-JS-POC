@@ -1,5 +1,4 @@
 Feature: Playwright - Employee User - Edit an Absence
-    @smoke
     Scenario: Playwright - Employee User - Edit an Absence
         Given Application is open in the browser
         When User logs in using "appUsername" and "appPassword"
@@ -10,6 +9,10 @@ Feature: Playwright - Employee User - Edit an Absence
         #Logout and Login
         And User Logout from application and logged in again with "appUsername" "appPassword"
         #Create Employeee and Impersonate as Employee
+        And User navigate from "Master Data" menu option to "Employee" sub menu to "Absence History"
+        Then User delete absence if exist for user last name "AT_Test_7261"
+        And User navigate from "Master Data" menu option to "Employee" sub menu to "General Information"
+        Then User delete employee if exist for user last name "AT_Test_7261"
         And User navigate from "Master Data" menu option to "Employee" sub menu to "General Information"
         When user creates employee with these details
         | firstName | 7261                    |
@@ -24,12 +27,11 @@ Feature: Playwright - Employee User - Edit an Absence
         | endDate   | 09/25/2020              |
         | birthDate | 03/05/1993              |
         | jobType   | Teacher                 |
-        | phone     | 4892145874              |
-        | pin       | 84913                  |
+        | phone     | 4877145874              |
+        | pin       | 84883                  |
         Then Employee is created successfully with first name "7261" and last name "AT_Test_7261"
         Then User Impersonate as Employee as firstName "7261" and lastName "AT_Test_7261"
         And User navigate from "Absences" menu option to "Create Absence"
-        #And User Selects the Date as "currentDate+1"
         Then User Clicks on the Day Picker and Select Date as "1"
         And Employee Create new absence with following "AR_Test_7621" "8"
         And User Will click on Create Absence button
@@ -38,5 +40,4 @@ Feature: Playwright - Employee User - Edit an Absence
         And User clear the Notes to Administrator and update as "Updated Notes to Administrator" 
         And User click on save absence button
         And Verify that the Notes to Administrator is updated successfully with "Updated Notes to Administrator"
-        #Then Delete the absence created by the employee
         

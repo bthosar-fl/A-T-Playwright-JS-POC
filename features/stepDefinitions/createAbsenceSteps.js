@@ -5,6 +5,7 @@ const EmployeePage = require('../../pageObjects/employeePage');
 const AbsenceCreatePage = require('../../pageObjects/absenceCreatePage');
 const ImpersonationPage = require('../../pageObjects/impersonationPage');
 const testData = require('../../test-data/createAbsenceTestData.json');
+const { HomePage } = require('../../pageObjects/homePage');
 
 Given('Application is open in the browser', async function () {
   this.loginPage = new LoginPage(this.page);
@@ -48,10 +49,12 @@ Then('User Logout from application and logged in again with {string} {string}', 
 });
 
 Then('User navigate from {string} menu option to {string} sub menu to {string}', async function (menu, submenu, tab) {
-  this.employeePage = new EmployeePage(this.page);
-  await this.employeePage.navigateToEmployeePage();
-  await this.employeePage.searchEmployee('A');
-  await this.page.getByRole('link', { name: 'General Information' }).click();
+  // this.employeePage = new EmployeePage(this.page);
+  // await this.employeePage.navigateToEmployeePage();
+  // await this.employeePage.searchEmployee('A');
+  // await this.page.getByRole('link', { name: 'General Information' }).click();
+  this.homePage = new HomePage(this.page);
+  await this.homePage.navigateToSubMenu(menu, submenu, tab);
 });
 
 When('user creates employee with required details', async function () {
@@ -106,6 +109,7 @@ Then('User End the Impersonation', async function () {
   await this.impersonationPage.endImpersonation();
 });
 When('user creates employee with these details', async function (dataTable) {
+  // Check if employee exis
   const details = dataTable.rowsHash();
    await this.employeePage.addEmployee({
       firstName: details.firstName,
@@ -175,3 +179,15 @@ Then ('User capture the absence confirmation number', async function(){
     // capture confirmation number for later use
   this.absenceConfirmationNumber = await this.absenceCreatePage.getAbsenceConfirmationNumber();
 });
+
+Then('User delete absence if exist for user last name {string}', async function (lastName) {
+  this.employeePage = new EmployeePage(this.page);
+  await this.employeePage.searchAndDeleteAbsence(lastName);
+});
+
+Then('User delete employee if exist for user last name {string}', async function (lastName) {
+  this.employeePage = new EmployeePage(this.page);
+  await this.employeePage.searchAndDeleteEmployee(lastName);
+});
+
+

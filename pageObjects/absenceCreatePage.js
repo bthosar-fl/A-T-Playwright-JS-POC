@@ -107,7 +107,7 @@ class AbsenceCreatePage extends BasePage {
     await this.page.locator(this.deleteAbsenceButton).first().click();
     await this.page.waitForTimeout(2000); 
     await this.page.locator(this.deleteAbsenceButton).nth(2).click();
-    await this.page.waitForTimeout(20000);
+    await this.page.waitForTimeout(2000);
 
   }
 
