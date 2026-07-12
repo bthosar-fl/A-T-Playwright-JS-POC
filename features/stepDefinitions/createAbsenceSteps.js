@@ -32,7 +32,6 @@ Then('User navigate from {string} menu option to {string}', async function (menu
 
 When('User Create new {string} with following {string} {string} and {string}', async function (name, category, _separator, visibility) {
   await this.absenceReasonPage.deleteReason(name); 
-  this.page.pause();
   await this.absenceReasonPage.clickAdd();
   await this.absenceReasonPage.createReason({
     name,

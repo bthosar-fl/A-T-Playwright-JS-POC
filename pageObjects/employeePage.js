@@ -155,14 +155,13 @@ class EmployeePage extends BasePage {
     if (isRemoveButtonVisible) {
       const removeBtn = this.page.locator(this.removeButton).first();
       await removeBtn.waitFor({ state: 'visible', timeout: 20000 });
-      await removeBtn.scrollIntoViewIfNeeded();
-      
+      await removeBtn.scrollIntoViewIfNeeded();      
       // Set up dialog handler BEFORE clicking remove button (since click triggers the alert)
       this.page.once('dialog', async dialog => {
         console.log(dialog.message()); // Optional: logs the alert text
         await dialog.accept();         // Simulates clicking "OK"
       });
-      
+       await this.page.waitForTimeout(2000);
       await removeBtn.click();
       await this.page.waitForTimeout(2000);
       await this.page.locator(this.deleteEmployeeSuccessMsg).waitFor({ state: 'visible', timeout: 20000 });

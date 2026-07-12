@@ -60,11 +60,15 @@ async verifyReasonCreated(name) {
 
 async deleteReason(name) {
   // If the reason exists, delete it else do nothing
-  if (await this.page.locator(`//span[contains(text(),'${name}')]`).count() > 0) {
-    const count = await this.page.locator(`//span[contains(text(),'${name}')]`).count();
+  //Print number of count of element
+  //wait for 10 sec for this element to apperar in the screen
+  await this.page.locator(`//span[contains(text(),'${name}')]`).first().waitFor({ state: 'visible', timeout: 10000 });
+  const count = await this.page.locator(`//span[contains(text(),'${name}')]`).count();
+  console.log(`Found ${count} elements with name '${name}'`);
+  if (count > 0) {
     for (let i = 0; i < count; i++) {
-      await this.page.locator(`//span[contains(text(),'${name}')]`).nth(i).scrollIntoViewIfNeeded();
-      await this.page.locator(`//span[contains(text(),'${name}')]`).nth(i).click();
+      await this.page.locator(`//span[contains(text(),'${name}')]`).first().scrollIntoViewIfNeeded();
+      await this.page.locator(`//span[contains(text(),'${name}')]`).first().click();
       await this.page.locator(this.deleteReasonButton).click();
       await this.page.locator(this.yesDeleteButton).click();
       await this.page.waitForTimeout(2000);
