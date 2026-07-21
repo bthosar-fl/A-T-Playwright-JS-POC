@@ -1,0 +1,16 @@
+const BasePage = require('./basePage');
+
+class {{className}} extends BasePage {
+  constructor(page) {
+    super(page);
+  }
+
+{{#each methods}}
+  async {{this.name}}({{this.params}}) {
+    // TODO: Implement {{this.name}}
+  }
+
+{{/each}}
+}
+
+module.exports = {{className}};

@@ -20,7 +20,7 @@ Then('User is logged in successfully and is redirected to application homepage',
   await this.page.getByRole('menuitem', { name: 'Reference Data' }).waitFor({ state: 'visible', timeout: 20000 });
 });
 
-Then('User navigate from {string} menu option to {string}', async function (menu, submenu) {
+And('User navigate from {string} menu option to {string}', async function (menu, submenu) {
   if (menu === 'Reference Data' && submenu === 'Absence Reason') {
     this.absenceReasonPage = new AbsenceReasonPage(this.page);
     await this.absenceReasonPage.open();
@@ -42,7 +42,7 @@ When('User Create new {string} with following {string} {string} and {string}', a
   await this.absenceReasonPage.verifyReasonCreated(name);
 });
 
-Then('User Logout from application and logged in again with {string} {string}', async function (userKey, passKey) {
+And('User Logout from application and logged in again with {string} {string}', async function (userKey, passKey) {
   await this.loginPage.logout();
   await this.loginPage.loginToApp(testData.login[userKey], testData.login[passKey]);
 });
@@ -81,22 +81,22 @@ Then('Employee is created successfully', async function () {
   await this.page.getByRole('link', { name: linkName }).waitFor({ state: 'visible', timeout: 20000 });
 });
 
-Then('User Impersonate as Employee', async function () {
+And('User Impersonate as Employee', async function () {
   const linkName = `${testData.employee.lastName}, ${testData.employee.firstName}`;
   await this.page.getByRole('link', { name: linkName }).click();
   this.impersonationPage = new ImpersonationPage(this.page);
   await this.impersonationPage.impersonateUser();
 });
 
-Then('User Clicks on the Day Picker and Select Date as {string}', async function (dayIndex) {
+And('User Clicks on the Day Picker and Select Date as {string}', async function (dayIndex) {
   await this.absenceCreatePage.selectDate(parseInt(dayIndex));
 });
 
-Then('Employee Create new absence with following {string} {string}', async function (reason, duration) {
+And('Employee Create new absence with following {string} {string}', async function (reason, duration) {
   await this.absenceCreatePage.fillAbsenceDetails(reason, duration);
 });
 
-Then('User Will click on Create Absence button', async function () {
+And('User Will click on Create Absence button', async function () {
   await this.absenceCreatePage.submitAbsence();
 });
 
@@ -104,7 +104,7 @@ Then('Absence is created with the reason', async function () {
   // Dialog acceptance in submitAbsence() confirms creation
 });
 
-Then('User End the Impersonation', async function () {
+And('User End the Impersonation', async function () {
   await this.impersonationPage.endImpersonation();
 });
 When('user creates employee with these details', async function (dataTable) {

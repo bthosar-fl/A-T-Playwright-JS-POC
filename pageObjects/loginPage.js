@@ -1,9 +1,9 @@
 class LoginPage {
   constructor(page) {
     this.page = page;
-    this.usernameInput = page.getByRole('textbox', { name: 'Username' });
-    this.passwordInput = page.getByRole('textbox', { name: 'Password' });
-    this.signInButton = "//span[text()='Sign In']";
+    this.usernameInput = page.locator('//input[@id="Username"]');
+    this.passwordInput = page.locator('//input[@id="Password"]');
+    this.signInButton = page.getByRole('button', { name: 'Sign In Loading' });
     this.userInfoButton = "//button[contains(@id,'user-info-title')]";
     this.logoutLink = "//a[contains(@class,'logout')]";
   }
