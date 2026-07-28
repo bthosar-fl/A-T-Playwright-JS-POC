@@ -1,0 +1,9 @@
+Feature: {{featureName}}
+
+{{#each scenarios}}
+  Scenario: {{this.name}}
+{{#each this.steps}}
+    {{this}}
+{{/each}}
+
+{{/each}}

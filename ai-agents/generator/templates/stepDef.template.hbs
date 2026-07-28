@@ -1,0 +1,8 @@
+const { Given, When, Then } = require('@cucumber/cucumber');
+
+{{#each steps}}
+{{this.keyword}}('{{this.pattern}}', async function ({{this.params}}) {
+  // TODO: Implement this step
+});
+
+{{/each}}

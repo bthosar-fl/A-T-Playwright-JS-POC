@@ -19,7 +19,3 @@ Then('User Will click on Create Absence button', async function () {
 Then('User click on ok button in confirmation pop-up', async function () {
   await this.absenceCreatePage.clickOK();
 });
-
-
-
-
