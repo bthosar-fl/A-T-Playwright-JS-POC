@@ -1,13 +1,13 @@
 const BasePage = require('./basePage');
 const AbsenceCreatePage = require('./absenceCreatePage');
-const HomePage = require('./webNavigatorPage');
+const WebNavigatorPage = require('./webNavigatorPage');
 
 class AbsenceHistoryPage extends BasePage {
   constructor(page) {
     super(page);
     this.searchEmployeeTextBox = "//input[@id='mask']";
     this.goButton = "//input[@type='submit']";
-    this.allConfNumOfUnfillAbsence = "//em[text()='UnFilled']//parent::td//parent::tr//a[contains(@href,'absencemodify') and @class='ctx']";
+    this.allConfNumOfUnfillAbsence = "//em[text()='UnFilled' or text()='Filled']//parent::td//parent::tr//a[contains(@href,'absencemodify') and @class='ctx']";
     this.deleteAbsenceButton = "//*[contains(text(),'Delete')]";
 
   }
@@ -36,8 +36,8 @@ class AbsenceHistoryPage extends BasePage {
         await this.deleteAbsence();
         await this.page.waitForTimeout(2000);
         for (let i = 0; i < confAbsenceList.length-1; i++) {
-          this.homePage = new HomePage(this.page);
-          await this.homePage.navigateToSubMenu('Master Data', 'Employee', 'Absence History');
+          this.webNavigatorPage = new WebNavigatorPage(this.page);
+          await this.webNavigatorPage.navigateToSubMenu('Master Data', 'Employee', 'Absence History');
           const searchLocator = this.page.locator(this.searchEmployeeTextBox);
           await searchLocator.waitFor({ state: 'visible', timeout: 20000 });
           await searchLocator.fill(lastName);

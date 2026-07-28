@@ -31,13 +31,13 @@ Feature:Playwright - Sub - Accept Job
         And User navigate from "Master Data" menu option to "Substitute" sub menu to "Add"
         When user creates substitute with these details
         | firstName | Sub_6904                    |
-        | lastName  | Sub_6904            |
+        | lastName  | Sub_6904                    |
         | email     | automationUser1@gmail.com|
         | dateOfJoin| 09/24/2019              |
         | birthDate | 03/05/1993              |
-        | phone     | 4878980874              |
-        | pin       | 79013                   |
-        | identifier| 16924                   |
+        | phone     | 5788927678              |
+        | pin       | 56788                   |
+        | identifier| 56782                   |
         | School    |Global Logic STAGE Org 2 11AB025A-EE18-43D5-9082-4|
         Then Substitute is created successfully with first name "Sub_6904" and last name "Sub_6904"
         And User navigate from "Reference Data" menu option to "Absence Reasons" sub menu to ""
