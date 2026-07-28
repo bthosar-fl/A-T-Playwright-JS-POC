@@ -5,7 +5,7 @@ class Employee_GeneralInformationPage extends BasePage {
     super(page);
     this.searchTextBox = "//form[@name='search']//input[@type='text']";
     this.goButton = "//form[@name='search']//input[@type='submit']";
-    this.searchEmployeeTextBox = "//input[@id='mask']";
+    this.searchEmployeeTextBox = "//input[@id='mask' or @name='mask']";
     this.removeButton = "//input[@name='Remove']";
     this.absenceRequestErrorButton = "//em[contains(text(),'Before you can delete this Employee ')]";
     this.allConfNumOfUnfillAbsence = "//em[text()='UnFilled' or text()='Filled']//parent::td//parent::tr//a[contains(@href,'absencemodify') and @class='ctx']";
@@ -94,6 +94,33 @@ async searchEmployee(lastName) {
     await this.page.locator(this.goButton).click();
     await this.page.waitForTimeout(5000); // Wait for 5 seconds before proceeding
 }
+
+async searchAndDeleteEmployee(lastName){
+    const searchLocator = this.page.locator(this.searchEmployeeTextBox);
+    await searchLocator.waitFor({ state: 'visible', timeout: 20000 });
+    await searchLocator.fill(lastName);
+    await this.page.locator(this.goButton).click();
+    await this.page.waitForTimeout(3000); // Wait for 3 seconds before proceeding
+
+    // Check if remove button exists before proceeding
+    const removeButtonLocator = await this.page.locator(this.removeButton).first();
+    const isRemoveButtonVisible = await removeButtonLocator.isVisible();
+    if (isRemoveButtonVisible) {
+      const removeBtn = this.page.locator(this.removeButton).first();
+      await removeBtn.waitFor({ state: 'visible', timeout: 20000 });
+      await removeBtn.scrollIntoViewIfNeeded();      
+      // Set up dialog handler BEFORE clicking remove button (since click triggers the alert)
+      this.page.once('dialog', async dialog => {
+        console.log(dialog.message()); // Optional: logs the alert text
+        await dialog.accept();         // Simulates clicking "OK"
+      });
+       await this.page.waitForTimeout(2000);
+      await removeBtn.click();
+      await this.page.waitForTimeout(2000);
+      await this.page.locator(this.deleteEmployeeSuccessMsg).waitFor({ state: 'visible', timeout: 20000 });
+    }
+  }
+
 
 }
 module.exports = Employee_GeneralInformationPage;

@@ -5,7 +5,10 @@ Feature:Playwright - Sub - Accept Job
         Given Application is open in the browser
         When User logs in using "appUsername" and "appPassword"
         Then User is logged in successfully and is redirected to application homepage
-        #Create Employee
+        And User navigate from "Master Data" menu option to "Employee" sub menu to "Absence History"
+        Then User delete absence if exist for user last name "AT_Test_6904"
+        And User navigate from "Master Data" menu option to "Employee" sub menu to "General Information"
+        Then User delete employee if exist for user last name "AT_Test_6904"
         And User navigate from "Master Data" menu option to "Employee" sub menu to "Add"
         When user creates employee with these details
         | firstName | 6904                    |
@@ -23,6 +26,8 @@ Feature:Playwright - Sub - Accept Job
         | phone     | 4876500874              |
         | pin       | 68003                   |
         Then Employee is created successfully with first name "6904" and last name "AT_Test_6904"
+        And User navigate from "Master Data" menu option to "Substitute" sub menu to "General Information"
+        Then User delete employee if exist for user last name "AT_Test_6904"
         And User navigate from "Master Data" menu option to "Substitute" sub menu to "Add"
         When user creates substitute with these details
         | firstName | Sub_6904                    |
@@ -31,8 +36,8 @@ Feature:Playwright - Sub - Accept Job
         | dateOfJoin| 09/24/2019              |
         | birthDate | 03/05/1993              |
         | phone     | 4878980874              |
-        | pin       | 79083                   |
-        | identifier| 16904                   |
+        | pin       | 79013                   |
+        | identifier| 16924                   |
         | School    |Global Logic STAGE Org 2 11AB025A-EE18-43D5-9082-4|
         Then Substitute is created successfully with first name "Sub_6904" and last name "Sub_6904"
         And User navigate from "Reference Data" menu option to "Absence Reasons" sub menu to ""

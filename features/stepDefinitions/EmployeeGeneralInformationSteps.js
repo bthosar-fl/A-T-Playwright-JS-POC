@@ -35,6 +35,10 @@ When('User search for employee with last name as {string}', async function (last
   await this.employeeGeneralInfoPage.searchEmployee(lastName);
 });
 
+Then('User delete employee if exist for user last name {string}', async function (lastName) {
+  this.employeeGeneralInfoPage = new employeeGeneralInfoPage(this.page);
+  await this.employeeGeneralInfoPage.searchAndDeleteEmployee(lastName);
+});
 
 
 
