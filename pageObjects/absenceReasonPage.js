@@ -8,15 +8,6 @@ class AbsenceReasonPage extends BasePage {
     this.yesDeleteButton = "//a[contains(text(),'Yes, Delete')]";
   }
 
-  /**
-   * Opens the Absence Reasons page via the Reference Data menu.
-   */
-  async open() {
-  await this.page.getByRole('menuitem', { name: 'Reference Data' }).waitFor({ state: 'visible', timeout: 20000 });
-  await this.page.getByRole('menuitem', { name: 'Reference Data' }).click();
-  await this.page.getByRole('link', { name: 'Absence Reasons' }).click();
-}
-
 /**
  * Clicks the Add Absence Reason button.
  */
@@ -59,21 +50,25 @@ async verifyReasonCreated(name) {
 }
 
 async deleteReason(name) {
-  // If the reason exists, delete it else do nothing
-  //Print number of count of element
-  //wait for 10 sec for this element to apperar in the screen
-  await this.page.locator(`//span[contains(text(),'${name}')]`).first().waitFor({ state: 'visible', timeout: 10000 });
-  const count = await this.page.locator(`//span[contains(text(),'${name}')]`).count();
-  console.log(`Found ${count} elements with name '${name}'`);
-  if (count > 0) {
-    for (let i = 0; i < count; i++) {
-      await this.page.locator(`//span[contains(text(),'${name}')]`).first().scrollIntoViewIfNeeded();
-      await this.page.locator(`//span[contains(text(),'${name}')]`).first().click();
-      await this.page.locator(this.deleteReasonButton).click();
-      await this.page.locator(this.yesDeleteButton).click();
-      await this.page.waitForTimeout(2000);
+  //This method will execute if this locator found else skip : //span[contains(text(),'${name}')]
+  try {
+    await this.page.locator(`//span[contains(text(),'${name}')]`).first().waitFor({ state: 'visible', timeout: 10000 });
+    const count = await this.page.locator(`//span[contains(text(),'${name}')]`).count();
+    console.log(`Found ${count} elements with name '${name}'`);
+    if (count > 0) {
+      for (let i = 0; i < count; i++) {
+        await this.page.locator(`//span[contains(text(),'${name}')]`).first().scrollIntoViewIfNeeded();
+        await this.page.locator(`//span[contains(text(),'${name}')]`).first().click();
+        await this.page.locator(this.deleteReasonButton).click();
+        await this.page.locator(this.yesDeleteButton).click();
+        await this.page.waitForTimeout(2000);
+      }
     }
+  } catch (error) {
+    console.log(`No absence reason found with name '${name}', skipping deletion.`);
+    return;
   }
+ 
 }
 }
 module.exports = AbsenceReasonPage;
