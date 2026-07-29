@@ -5,7 +5,17 @@ When('user creates employee with these details', async function (dataTable) {
   // Check if employee exis
   const details = dataTable.rowsHash();
   this.employeeGeneralInfoPage = new employeeGeneralInfoPage(this.page);
-   await this.employeeGeneralInfoPage.addEmployee({
+  
+  // Helper function to generate random number with specific length
+  const generateRandomNumber = (length) => {
+    return Math.floor(Math.random() * Math.pow(10, length)).toString().padStart(length, '0');
+  };
+  
+  // Generate random values if specified as "RANDOM"
+  const phone = details.phone === 'RANDOM' ? generateRandomNumber(10) : details.phone;
+  const pin = details.pin === 'RANDOM' ? generateRandomNumber(5) : details.pin;
+  
+  await this.employeeGeneralInfoPage.addEmployee({
       firstName: details.firstName,
       lastName: details.lastName,
       empId: details.empId,
@@ -18,8 +28,8 @@ When('user creates employee with these details', async function (dataTable) {
       endDate: details.endDate,
       birthDate: details.birthDate,
       jobType: details.jobType,
-      phone: details.phone,
-      pin: details.pin
+      phone: phone,
+      pin: pin
     });
     
 });

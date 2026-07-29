@@ -23,8 +23,8 @@ Feature:Playwright - Sub - Accept Job
         | endDate   | 09/25/2020              |
         | birthDate | 03/05/1993              |
         | jobType   | Teacher                 |
-        | phone     | 4876500874              |
-        | pin       | 68003                   |
+        | phone     | RANDOM              |
+        | pin       | RANDOM                   |
         Then Employee is created successfully with first name "6904" and last name "AT_Test_6904"
         And User navigate from "Master Data" menu option to "Substitute" sub menu to "General Information"
         Then User delete employee if exist for user last name "AT_Test_6904"
@@ -35,9 +35,9 @@ Feature:Playwright - Sub - Accept Job
         | email     | automationUser1@gmail.com|
         | dateOfJoin| 09/24/2019              |
         | birthDate | 03/05/1993              |
-        | phone     | 5788927678              |
-        | pin       | 56788                   |
-        | identifier| 56782                   |
+        | phone     | RANDOM                  |
+        | pin       | RANDOM                   |
+        | identifier| RANDOM                   |
         | School    |Global Logic STAGE Org 2 11AB025A-EE18-43D5-9082-4|
         Then Substitute is created successfully with first name "Sub_6904" and last name "Sub_6904"
         And User navigate from "Reference Data" menu option to "Absence Reasons" sub menu to ""
@@ -55,5 +55,6 @@ Feature:Playwright - Sub - Accept Job
         And User search for employee with last name as "Sub_6904"
         Then User Impersonate as Employee as firstName "Sub_6904" and lastName "Sub_6904"
         And Accept the job where lastname is "AT_Test_6904"
+
 
         

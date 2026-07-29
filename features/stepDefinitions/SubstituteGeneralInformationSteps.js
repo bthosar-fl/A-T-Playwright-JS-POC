@@ -4,15 +4,26 @@ const substituteGeneralInfoPage = require('../../pageObjects/substitute_GeneralI
 When('user creates substitute with these details', async function (dataTable) {
   const details = dataTable.rowsHash();
   this.substituteGeneralInfoPage = new substituteGeneralInfoPage(this.page);
-   await this.substituteGeneralInfoPage.addSubstitute({
+  
+  // Helper function to generate random number with specific length
+  const generateRandomNumber = (length) => {
+    return Math.floor(Math.random() * Math.pow(10, length)).toString().padStart(length, '0');
+  };
+  
+  // Generate random values if specified as "RANDOM"
+  const phone = details.phone === 'RANDOM' ? generateRandomNumber(10) : details.phone;
+  const pin = details.pin === 'RANDOM' ? generateRandomNumber(5) : details.pin;
+  const identifier = details.identifier === 'RANDOM' ? generateRandomNumber(5) : details.identifier;
+  
+  await this.substituteGeneralInfoPage.addSubstitute({
       firstName: details.firstName,
       lastName: details.lastName,
       email: details.email,
       dateOfJoin: details.dateOfJoin,
       birthDate: details.birthDate,
-      phone: details.phone,
-      pin: details.pin,
-      identifier: details.identifier,
+      phone: phone,
+      pin: pin,
+      identifier: identifier,
       School: details.School,
     });
     

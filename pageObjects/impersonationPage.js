@@ -11,12 +11,12 @@ class ImpersonationPage extends BasePage {
    * Impersonates the selected user by clicking the login-as-user link and waiting for navigation.
    */
   async impersonateUser() {
-    await this.loginAsUserLink.waitFor({ state: 'visible', timeout: 20000 });
+    await this.loginAsUserLink.waitFor({ state: 'visible', timeout: 10000 });
     await Promise.all([
-      this.page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 20000 }),
+      this.page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 10000 }),
       this.loginAsUserLink.click()
     ]);
-    await this.page.waitForSelector(this.exitButton, { state: 'visible', timeout: 20000 });
+    await this.page.waitForSelector(this.exitButton, { state: 'visible', timeout: 10000 });
   }
 
   /**
