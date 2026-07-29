@@ -3,7 +3,7 @@ class LoginPage {
     this.page = page;
     this.usernameInput = page.locator('//input[@id="Username"]');
     this.passwordInput = page.locator('//input[@id="Password"]');
-    this.signInButton = page.getByRole('button', { name: 'Sign In Loading' });
+    this.signInButton = "//button[contains(@id,'button-login')]";
     this.userInfoButton = "//button[contains(@id,'user-info-title')]";
     this.logoutLink = "//a[contains(@class,'logout')]";
   }
@@ -24,7 +24,7 @@ class LoginPage {
   async loginToApp(username, password) {
     await this.usernameInput.fill(username);
     await this.passwordInput.fill(password);
-    await this.page.locator(this.signInButton).click();
+    await this.page.locator(this.signInButton).first().click();
   }
 
   /**
