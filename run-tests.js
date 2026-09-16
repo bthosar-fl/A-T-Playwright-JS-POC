@@ -3,7 +3,7 @@ const { execSync } = require('child_process');
 
 // Step 1: Run tests (don't exit on failure — we still want the report)
 try {
-  execSync('npx cucumber-js features/createAbsence.feature --require features/**/*.js --require support/**/*.js --format progress --format json:reports/cucumber-report.json', {
+  execSync('npx cucumber-js features/createAbsence.feature --require stepDefinitions/**/*.js --require support/**/*.js --format progress --format json:reports/cucumber-report.json', {
     stdio: 'inherit',
     cwd: __dirname
   });

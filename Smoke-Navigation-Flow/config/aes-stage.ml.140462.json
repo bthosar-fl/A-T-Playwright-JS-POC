@@ -1,0 +1,29 @@
+{
+  "environment": "stageML",
+  "application": "AES Stage ML",
+  "organizationId": "140462",
+  "browser": "chrome",
+  "headless": false,
+  "video": false,
+  "url": "https://login.stage-k12.ss.frontlineeducation.com/",
+  "applicationHubUrl": "https://stage-k12.ss.frontlineeducation.com/app",
+  "requiredUrlContains": "stage-k12.ss",
+  "username": "SSDManualSetup86_4",
+  "testUsernames": {
+    "org_username": "vtqamail+SSDManualSetupOU86ML@dev.frontlineed.com",
+    "campusUser": "",
+    "employee": "vtqamail+SSD_EmployeeUserML@dev.frontlineed.com"
+  },
+  "password": "",
+  "testPasswords": {
+    "org_username": "Frontlinecitizen@1",
+    "campusUser": "",
+    "employee": "Frontlinecitizen@1"
+  },
+  "userPriorities": {
+    "org_username": ["P1", "P2", "P3", "P4","P5"],
+    "campusUser": ["P1", "P2"],
+    "employee": ["P2", "P4"],
+    "substitute": ["P4"]
+  }
+}

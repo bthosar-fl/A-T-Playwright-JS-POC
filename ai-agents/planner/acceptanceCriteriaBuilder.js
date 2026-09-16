@@ -7,7 +7,7 @@ class AcceptanceCriteriaBuilder {
   }
 
   _loadExistingStepPatterns() {
-    const stepDefsDir = path.resolve(__dirname, '../../features/stepDefinitions');
+    const stepDefsDir = path.resolve(__dirname, '../../stepDefinitions');
     const patterns = [];
     if (!fs.existsSync(stepDefsDir)) return patterns;
 

@@ -49,7 +49,7 @@ ATPlaywrightPOC/
 │
 ├── features/                           # BDD Layer
 │   ├── createAbsence.feature           #   Gherkin scenarios (business-readable)
-│   └── stepDefinitions/                #   Step implementations
+├── stepDefinitions/                    # Step implementations
 │       └── createAbsenceSteps.js
 │
 ├── pageObjects/                        # Page Object Model (POM)
@@ -59,16 +59,6 @@ ATPlaywrightPOC/
 │   ├── employeePage.js                 #   Employee creation & search
 │   ├── absenceCreatePage.js            #   Employee-side absence creation
 │   └── impersonationPage.js            #   Impersonate/exit user session
-│
-├── utils/                              # Utilities Library
-│   ├── waitUtils.js                    #   Wait & sync patterns
-│   ├── elementUtils.js                 #   Element interaction helpers
-│   ├── browserUtils.js                 #   Browser-level operations
-│   ├── assertionUtils.js               #   Assertion wrappers
-│   ├── dataGenerator.js                #   Dynamic test data generation
-│   ├── tableUtils.js                   #   Table/list interaction helpers
-│   ├── APIutils.js                     #   API testing & mocking
-│   └── helpers.js                      #   General-purpose utilities
 │
 ├── ai-agents/                          # AI Agents Layer
 │   ├── planner/                        #   JIRA → Acceptance Criteria
@@ -81,9 +71,6 @@ ATPlaywrightPOC/
 ├── support/                            # Test Lifecycle
 │   ├── hooks.js                        #   Before/After (browser setup/teardown)
 │   └── allureFormatter.js              #   Allure reporting integration
-│
-├── test-data/                          # Externalized Test Data
-│   └── createAbsenceTestData.json
 │
 ├── reports/                            # Test Reports
 │   ├── html-report/                    #   Multi-Cucumber HTML Report
@@ -154,18 +141,7 @@ Feature Step → Step Definition → Page Object → Playwright Action
 - **Dialog handling** — Native alert/confirm/prompt handling built-in
 - **Trace viewer** — Step-by-step visual replay of failed tests
 
-### 4. Comprehensive Utility Layer
-| Utility | Key Capabilities |
-|---------|-----------------|
-| `waitUtils.js` | `retryAction`, `waitForResponse`, `waitForText` |
-| `elementUtils.js` | `safeClick`, `typeSlowly`, `dragAndDrop`, `isVisible` |
-| `browserUtils.js` | `handleDialog`, `switchToNewTab`, `captureConsoleLogs` |
-| `dataGenerator.js` | `generateEmployee`, `randomEmail`, `futureDate` |
-| `assertionUtils.js` | `softAssert`, `assertAttribute`, `assertCount` |
-| `tableUtils.js` | `getTableData`, `clickRowByText`, `sortTableByColumn` |
-| `APIutils.js` | `mockApiResponse`, `captureApiResponse`, `getAuthToken` |
-
-### 5. AI Agents Integration
+### 4. AI Agents Integration
 The framework includes an AI-powered layer that augments traditional test automation:
 
 ```
@@ -206,7 +182,6 @@ The framework includes an AI-powered layer that augments traditional test automa
 
 | Current State | Enhancement | Impact |
 |---------------|-------------|--------|
-| Static JSON files | Dynamic data generation with `dataGenerator.js` | Eliminates ID conflicts in parallel runs |
 | Hardcoded credentials | `.env` file + secrets manager | Security + multi-environment support |
 | Single dataset per test | Data-driven scenarios (Scenario Outline) | 10x test coverage from same feature |
 | Manual cleanup | API-based teardown in After hooks | Clean state guaranteed for next run |
@@ -305,7 +280,7 @@ PR Created → Install → Lint → Smoke Tests → Full Suite → Report → AI
 ## Contributing
 
 1. Create feature files in `features/` following existing Gherkin patterns
-2. Add step definitions in `features/stepDefinitions/`
+2. Add step definitions in `stepDefinitions/`
 3. Create page objects in `pageObjects/` extending `BasePage`
-4. Externalize test data in `test-data/` as JSON
+4. Keep smoke data in the selected environment config or feature file
 5. Run `npm run report:run` to verify before pushing

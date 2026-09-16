@@ -6,3 +6,15 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# Generated test and agent output
+/reports/
+/screenshots/
+/ai-reports/*
+!/ai-reports/**/.gitkeep
+/ai-agents/generator/output/*
+!/ai-agents/generator/output/.gitkeep
+/ai-agents/planner/output/*
+!/ai-agents/planner/output/.gitkeep
+/Smoke-Navigation-Flow/Report/*
+!/Smoke-Navigation-Flow/Report/.gitkeep

@@ -13,7 +13,7 @@ class LoginPage {
    * @param {string} url - The URL to navigate to.
    */
   async goto(url) {
-    await this.page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    return this.page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
   }
 
   /**
