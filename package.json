@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:cucumber": "cucumber-js --require features --format progress",
+    "smoke": "node Smoke-Navigation-Flow/Runners/smokeRunner.js",
+    "test:cucumber": "cucumber-js --require stepDefinitions --format progress",
     "test:feature": "cucumber-js features/createAbsence.feature --format progress --format html:reports/cucumber-report.html",
-    "test:report": "cucumber-js features/createAbsence.feature --require features/**/*.js --require support/**/*.js --format progress --format json:reports/cucumber-report.json",
+    "test:report": "cucumber-js features/createAbsence.feature --require stepDefinitions/**/*.js --require support/**/*.js --format progress --format json:reports/cucumber-report.json",
     "report:generate": "node generate-report.js",
     "report:run": "node run-tests.js",
     "ai:plan": "node ai-agents/planner/index.js",
@@ -26,6 +27,8 @@
     "@cucumber/cucumber": "^10.0.0",
     "@playwright/test": "^1.60.0",
     "@types/node": "^18.0.0",
+    "allure-commandline": "^2.34.1",
+    "allure-cucumberjs": "^3.4.2",
     "handlebars": "^4.7.8",
     "multiple-cucumber-html-reporter": "^3.10.0",
     "playwright": "^1.60.0"

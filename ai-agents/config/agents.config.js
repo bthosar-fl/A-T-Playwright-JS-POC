@@ -8,7 +8,7 @@ module.exports = {
   generator: {
     enabled: true,
     featuresDir: '../../features',
-    stepDefsDir: '../../features/stepDefinitions',
+    stepDefsDir: '../../stepDefinitions',
     pageObjectsDir: '../../pageObjects',
     outputDir: '../generator/output',
     promptFile: './prompts/generator.prompt.md'
@@ -18,7 +18,7 @@ module.exports = {
     reportsDir: '../../reports',
     screenshotsDir: '../../screenshots',
     pageObjectsDir: '../../pageObjects',
-    stepDefsDir: '../../features/stepDefinitions',
+    stepDefsDir: '../../stepDefinitions',
     maxRetries: 2,
     promptFile: './prompts/healer.prompt.md'
   }

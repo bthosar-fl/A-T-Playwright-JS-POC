@@ -3,7 +3,7 @@ const path = require('path');
 
 class StepDefGenerator {
   constructor() {
-    this.stepDefsDir = path.resolve(__dirname, '../../features/stepDefinitions');
+    this.stepDefsDir = path.resolve(__dirname, '../../stepDefinitions');
   }
 
   generateFromFeature(featureContent) {
