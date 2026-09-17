@@ -63,6 +63,8 @@ function prioritiesForUser(config, userKey, availablePriorities) {
  * @returns {boolean} True when Cucumber completes successfully.
  */
 function run(config, userKey, priority, reportDir, isLastPriority) {
+  // ensure json output directory exists for this run
+  fs.mkdirSync(path.join(reportDir, 'cucumber-json'), { recursive: true });
   const args = [
     cucumberCli,
     ...featureFiles(path.join(smokeDir, 'features')),
@@ -70,6 +72,7 @@ function run(config, userKey, priority, reportDir, isLastPriority) {
     '--format', 'progress',
     '--format', 'allure-cucumberjs/reporter',
     '--format-options', JSON.stringify({ resultsDir: path.join(reportDir, 'allure-results') }),
+    '--format', 'json:' + path.join(reportDir, 'cucumber-json', `${userKey}-${priority.replace('@', '')}.json`),
     '--order', 'defined',
     '--tags', `${priority} and @${config.organizationId}`
   ];
@@ -94,6 +97,7 @@ function run(config, userKey, priority, reportDir, isLastPriority) {
  * @param {string[]} prioritiesArr e.g. ['@P1','@P2']
  */
 function runMultiplePriorities(config, userKey, prioritiesArr, reportDir, isLastPriority) {
+  fs.mkdirSync(path.join(reportDir, 'cucumber-json'), { recursive: true });
   const prioritiesExpr = prioritiesArr.length > 1 ? `(${prioritiesArr.join(' or ')})` : prioritiesArr[0];
   const args = [
     cucumberCli,
@@ -102,6 +106,7 @@ function runMultiplePriorities(config, userKey, prioritiesArr, reportDir, isLast
     '--format', 'progress',
     '--format', 'allure-cucumberjs/reporter',
     '--format-options', JSON.stringify({ resultsDir: path.join(reportDir, 'allure-results') }),
+    '--format', 'json:' + path.join(reportDir, 'cucumber-json', `${userKey}-combined.json`),
     '--order', 'defined',
     '--tags', `${prioritiesExpr} and @${config.organizationId}`
   ];
@@ -126,10 +131,37 @@ function runMultiplePriorities(config, userKey, prioritiesArr, reportDir, isLast
  * @returns {boolean} True when the report is generated.
  */
 function generateReport(reportDir) {
-  const result = spawnSync(process.platform === 'win32' ? 'npx.cmd' : 'npx', [
-    'allure', 'generate', path.join(reportDir, 'allure-results'), '--clean', '-o', path.join(reportDir, 'allure-report')
-  ], { cwd: rootDir, stdio: 'inherit' });
-  return result.status === 0;
+  // Try to generate Allure report first (requires Java). If that fails, fall back
+  // to generating an HTML report from Cucumber JSON using multiple-cucumber-html-reporter.
+  const npxCmd = process.platform === 'win32' ? 'npx.cmd' : 'npx';
+  try {
+    const allureRes = spawnSync(npxCmd, [
+      'allure', 'generate', path.join(reportDir, 'allure-results'), '--clean', '-o', path.join(reportDir, 'allure-report')
+    ], { cwd: rootDir, stdio: 'inherit' });
+    if (allureRes.status === 0) return true;
+    console.warn('[Smoke] Allure generation failed, falling back to Cucumber HTML reporter.');
+  } catch (e) {
+    console.warn('[Smoke] Allure generation threw an error, falling back to Cucumber HTML reporter.', e && e.message);
+  }
+
+  // Generate HTML from Cucumber JSON files
+  try {
+    const reporter = require('multiple-cucumber-html-reporter');
+    const jsonDir = path.join(reportDir, 'cucumber-json');
+    if (!fs.existsSync(jsonDir)) {
+      console.error('[Smoke] No Cucumber JSON directory found:', jsonDir);
+      return false;
+    }
+    reporter.generate({
+      jsonDir,
+      reportPath: path.join(reportDir, 'cucumber-html'),
+      openReportInBrowser: false
+    });
+    return true;
+  } catch (err) {
+    console.error('[Smoke] Failed to generate Cucumber HTML report:', err && err.message);
+    return false;
+  }
 }
 
 const config = getConfig();

@@ -55,10 +55,10 @@ npm install
 Run a config:
 
 ```powershell
-$env:SMOKE_CONFIG = "aes-stage.ml.140462"
-$env:SMOKE_BROWSER = "firefox" # Optional: chrome, edge, firefox, or webkit
-$env:SMOKE_HEADLESS = "true" # Optional: use this in CI to hide the browser
-npm run smoke
+$env:SMOKE_CONFIG='aes-stage.ml.140462'
+$env:SMOKE_USER='org_username'            
+$env:SMOKE_SINGLE_USER='true'
+node Smoke-Navigation-Flow/Runners/navigationSmokeRunner.js
 ```
 
 The report is created in `Report/<config name>/<run time>/`.
