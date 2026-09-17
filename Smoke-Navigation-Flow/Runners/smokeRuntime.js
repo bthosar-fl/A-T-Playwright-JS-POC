@@ -29,12 +29,19 @@ function getConfig() {
  * @returns {{username: string, password: string}} Credentials for the current smoke user.
  * @throws {Error} When the selected user has no username or password.
  */
-function getCredentials() {
+function getCredentials(userKey) {
   const config = getConfig();
-  const userKey = process.env.SMOKE_USER;
-  const username = config.testUsernames?.[userKey];
-  const password = config.testPasswords?.[userKey] || config.password;
-  if (!username || !password) throw new Error(`Credentials missing for smoke user: ${userKey}`);
+  const key = userKey || process.env.SMOKE_USER || 'org_username';
+
+  const normalize = (v) => (typeof v === 'string' && v.trim()) ? v.trim() : undefined;
+
+  const username = normalize(config.testUsernames?.[key]) ?? normalize(config.username);
+  const password = normalize(config.testPasswords?.[key]) ?? normalize(config.password);
+
+  const mask = (s) => (typeof s === 'string' && s.length) ? `${s[0]}${'*'.repeat(Math.max(3, s.length - 1))}` : s;
+  console.log(`[Smoke] getCredentials: resolved userKey="${key}", username="${username}", password="${mask(password)}"`);
+
+  if (!username || !password) throw new Error(`Credentials missing for smoke user: ${key}`);
   return { username, password };
 }
 

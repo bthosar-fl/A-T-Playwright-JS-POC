@@ -11,13 +11,25 @@ Given('Application is open in the browser', async function () {
   console.log(`[Smoke] Loaded URL: ${this.page.url()}${response ? ` (${response.status()})` : ''}`);
 });
 
-When('User logs in using {string} and {string}', async function () {
-  const credentials = getCredentials();
+When('User logs in using {string} and {string}', async function (userKey, _passwordKey) {
+  const key = userKey || process.env.SMOKE_USER;
+  console.log(`[Smoke] Step: User logs in using (two-arg) userKey="${key}"`);
+  const credentials = getCredentials(key);
+  console.log(`[Smoke] Step: calling loginToApp for "${credentials.username}"`);
+  await this.loginPage.loginToApp(credentials.username, credentials.password);
+});
+
+When('User logs in using {string}', async function (userKey) {
+  const key = userKey || process.env.SMOKE_USER;
+  console.log(`[Smoke] Step: User logs in using userKey="${key}"`);
+  const credentials = getCredentials(key);
+  console.log(`[Smoke] Step: calling loginToApp for "${credentials.username}"`);
   await this.loginPage.loginToApp(credentials.username, credentials.password);
 });
 
 Then('User is logged in successfully and is redirected to application homepage', async function () {
-  await this.page.getByRole('menuitem', { name: 'Reference Data' }).waitFor({ state: 'visible', timeout: 20000 });
+  //await this.page.getByRole('menuitem', { name: 'Reference Data' }).waitFor({ state: 'visible', timeout: 20000 });
+  await this.page.waitForSelector("//*[contains(text(),'Absence Management')]", { state: 'visible', timeout: 20000 });
 });
 
 Then('User Impersonate as Employee', async function () {

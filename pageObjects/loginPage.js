@@ -1,9 +1,10 @@
 class LoginPage {
   constructor(page) {
     this.page = page;
-    this.usernameInput = page.locator('//input[@id="Username"]');
-    this.passwordInput = page.locator('//input[@id="Password"]');
-    this.signInButton = page.getByRole('button', { name: 'Sign In Loading' });
+    this.usernameInput = page.locator('//input[@id="input27"]');
+    this.passwordInput = page.locator('//input[@name="credentials.passcode"]');
+    this.nextButton = page.locator("//input[@value='Next']");
+    this.signInButton = page.locator("//input[@value='Verify']");
     this.userInfoButton = "//button[contains(@id,'user-info-title')]";
     this.logoutLink = "//a[contains(@class,'logout')]";
   }
@@ -23,8 +24,9 @@ class LoginPage {
    */
   async loginToApp(username, password) {
     await this.usernameInput.fill(username);
+    await this.nextButton.click();
     await this.passwordInput.fill(password);
-    await this.page.locator(this.signInButton).click();
+    await this.signInButton.click();
   }
 
   /**
