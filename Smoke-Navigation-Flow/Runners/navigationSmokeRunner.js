@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
-const { rootDir, smokeDir, getConfig } = require('./smokeRuntime');
+const { rootDir, smokeDir, getConfig } = require('./navigationSmokeRuntime');
 const cucumberCli = path.join(path.dirname(require.resolve('@cucumber/cucumber')), '..', 'bin', 'cucumber.js');
 
 /**
@@ -88,6 +88,39 @@ function run(config, userKey, priority, reportDir, isLastPriority) {
 }
 
 /**
+ * Runs Cucumber once for multiple priorities for a single user.
+ * @param {object} config
+ * @param {string} userKey
+ * @param {string[]} prioritiesArr e.g. ['@P1','@P2']
+ */
+function runMultiplePriorities(config, userKey, prioritiesArr, reportDir, isLastPriority) {
+  const prioritiesExpr = prioritiesArr.length > 1 ? `(${prioritiesArr.join(' or ')})` : prioritiesArr[0];
+  const args = [
+    cucumberCli,
+    ...featureFiles(path.join(smokeDir, 'features')),
+    '--config', 'Smoke-Navigation-Flow/cucumber.js',
+    '--format', 'progress',
+    '--format', 'allure-cucumberjs/reporter',
+    '--format-options', JSON.stringify({ resultsDir: path.join(reportDir, 'allure-results') }),
+    '--order', 'defined',
+    '--tags', `${prioritiesExpr} and @${config.organizationId}`
+  ];
+  console.log(`[Smoke] Running combined priorities for ${userKey}: ${prioritiesExpr}`);
+  const result = spawnSync(process.execPath, args, {
+    cwd: rootDir,
+    stdio: 'inherit',
+    env: {
+      ...process.env,
+      SMOKE_USER: userKey,
+      SMOKE_REPORT_DIR: reportDir,
+      SMOKE_VIDEO: String(Boolean(config.video)),
+      SMOKE_LAST_PRIORITY: String(isLastPriority)
+    }
+  });
+  return result.status === 0;
+}
+
+/**
  * Converts Allure result files into a browsable HTML report.
  * @param {string} reportDir Current run's report folder.
  * @returns {boolean} True when the report is generated.
@@ -105,7 +138,19 @@ const runId = new Date().toISOString().replace(/[:.]/g, '-');
 const reportDir = path.join(smokeDir, 'Report', configName, runId);
 const files = featureFiles(path.join(smokeDir, 'features'));
 const orderedPriorities = priorities(files, `@${config.organizationId}`);
-const users = Object.entries(config.testUsernames || {}).filter(([, username]) => username);
+let users = Object.entries(config.testUsernames || {}).filter(([, username]) => username);
+
+// Support a single-user smoke run to avoid spawning multiple Cucumber processes
+// Set SMOKE_SINGLE_USER=true and provide SMOKE_USER to run only that user's priorities.
+if (process.env.SMOKE_SINGLE_USER === 'true') {
+  const single = process.env.SMOKE_USER;
+  if (!single) throw new Error('SMOKE_SINGLE_USER=true requires SMOKE_USER to be set to a testUsernames key.');
+  if (!Object.prototype.hasOwnProperty.call(config.testUsernames || {}, single) || !config.testUsernames[single]) {
+    throw new Error(`SMOKE_USER="${single}" is not defined in config.testUsernames or has no username.`);
+  }
+  users = [[single, config.testUsernames[single]]];
+  console.log(`[Smoke] Running single-user mode for: ${single}`);
+}
 
 if (!orderedPriorities.length) throw new Error(`No @${config.organizationId} scenarios with @P tags were found.`);
 fs.mkdirSync(reportDir, { recursive: true });
@@ -113,8 +158,13 @@ fs.mkdirSync(reportDir, { recursive: true });
 let success = true;
 for (const [userKey] of users) {
   const userPriorities = prioritiesForUser(config, userKey, orderedPriorities);
-  for (const [index, priority] of userPriorities.entries()) {
-    success = run(config, userKey, priority, reportDir, index === userPriorities.length - 1) && success;
+  if (process.env.SMOKE_SINGLE_USER === 'true') {
+    // Run all allowed priorities in a single Cucumber invocation to avoid multiple browser launches
+    success = runMultiplePriorities(config, userKey, userPriorities, reportDir, true) && success;
+  } else {
+    for (const [index, priority] of userPriorities.entries()) {
+      success = run(config, userKey, priority, reportDir, index === userPriorities.length - 1) && success;
+    }
   }
 }
 success = generateReport(reportDir) && success;

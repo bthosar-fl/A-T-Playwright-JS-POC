@@ -1,6 +1,6 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
 const AbsenceReasonPage = require('../pageObjects/absenceReasonPage');
-const { getConfig } = require('../Smoke-Navigation-Flow/Runners/smokeRuntime');
+const { getConfig } = require('../Smoke-Navigation-Flow/Runners/navigationSmokeRuntime');
 
 When('User Create new absence reason as {string} with following {string} {string} and {string}', async function (name, category, _separator, visibility) {
   this.absenceReasonPage = new AbsenceReasonPage(this.page);

@@ -23,10 +23,24 @@ class LoginPage {
    * @param {string} password - The user's PIN or password.
    */
   async loginToApp(username, password) {
+    console.log(`[Smoke] loginToApp: filling username for ${username}`);
     await this.usernameInput.fill(username);
     await this.nextButton.click();
+    try {
+      await this.passwordInput.waitFor({ state: 'visible', timeout: 20000 });
+    } catch (e) {
+      console.log('[Smoke] loginToApp: password input did not appear within timeout');
+      throw e;
+    }
+    console.log('[Smoke] loginToApp: filling password');
     await this.passwordInput.fill(password);
-    await this.signInButton.click();
+    // Click sign-in and wait for navigation or network idle; tolerate no-navigation cases.
+    console.log('[Smoke] loginToApp: clicking sign in');
+    await Promise.all([
+      this.page.waitForNavigation({ waitUntil: 'networkidle', timeout: 30000 }).catch(() => {}),
+      this.signInButton.click()
+    ]);
+    console.log('[Smoke] loginToApp: sign in clicked');
   }
 
   /**

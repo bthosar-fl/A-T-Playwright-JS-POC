@@ -11,17 +11,19 @@
   "username": "SSDManualSetup86_4",
   "testUsernames": {
     "org_username": "vtqamail+SSDManualSetupOU86ML@dev.frontlineed.com",
-    "campusUser": "",
-    "employee": "vtqamail+SSD_EmployeeUserML@dev.frontlineed.com"
+    "campusUser": "vtqamail+multicuempssdML@dev.frontlineed.com",
+    "employee": "vtqamail+SSD_EmployeeUserML@dev.frontlineed.com",
+    "substitute": "vtqamail+SSDManualSetupSub86ML@dev.frontlineed.com"
   },
   "password": "",
   "testPasswords": {
     "org_username": "Frontlinecitizen@1",
-    "campusUser": "",
-    "employee": "Frontlinecitizen@1"
+    "campusUser": "Frontlinecitizen@1",
+    "employee": "Frontlinecitizen@1",
+    "substitute": "Frontlinecitizen@1"
   },
   "userPriorities": {
-    "org_username": ["P1", "P2", "P3", "P4","P5"],
+    "org_username": ["P1", "P2", "P3", "P4"],
     "campusUser": ["P1", "P2"],
     "employee": ["P2", "P4"],
     "substitute": ["P4"]

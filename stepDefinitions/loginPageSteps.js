@@ -1,7 +1,7 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { LoginPage } = require('../pageObjects/loginPage');
 const ImpersonationPage = require('../pageObjects/impersonationPage');
-const { getCredentials, getConfig } = require('../Smoke-Navigation-Flow/Runners/smokeRuntime');
+const { getCredentials, getConfig } = require('../Smoke-Navigation-Flow/Runners/navigationSmokeRuntime');
 
 Given('Application is open in the browser', async function () {
   this.loginPage = new LoginPage(this.page);
@@ -30,6 +30,8 @@ When('User logs in using {string}', async function (userKey) {
 Then('User is logged in successfully and is redirected to application homepage', async function () {
   //await this.page.getByRole('menuitem', { name: 'Reference Data' }).waitFor({ state: 'visible', timeout: 20000 });
   await this.page.waitForSelector("//*[contains(text(),'Absence Management')]", { state: 'visible', timeout: 20000 });
+  await this.page.locator("//*[contains(text(),'Absence Management')]").first().click();
+  await this.page.waitForTimeout(20000); // Wait for 2 seconds to ensure the page is fully loaded
 });
 
 Then('User Impersonate as Employee', async function () {

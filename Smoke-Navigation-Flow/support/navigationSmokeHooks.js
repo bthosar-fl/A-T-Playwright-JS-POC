@@ -4,7 +4,7 @@ const { chromium, firefox, webkit } = require('playwright');
 const fs = require('fs');
 const path = require('path');
 const { LoginPage } = require('../../pageObjects/loginPage');
-const { getBrowserName, getConfig } = require('../Runners/smokeRuntime');
+const { getBrowserName, getConfig } = require('../Runners/navigationSmokeRuntime');
 
 setDefaultTimeout(120 * 1000);
 
