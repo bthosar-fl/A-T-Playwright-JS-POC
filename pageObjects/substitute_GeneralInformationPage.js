@@ -4,6 +4,7 @@ class Substitute_GeneralInformationPage extends BasePage {
   constructor(page) {
     super(page);
     this.page = page;
+     this.pageTitle = '//span[@title="Substitute Search"]';
     this.firstName = "//input[@id='substitutes.SUB_FirstName']";
     this.lastName = "//input[@id='substitutes.SUB_LastName']";
     this.email = "//input[@id='substitutes.SUB_email']";
@@ -75,6 +76,14 @@ class Substitute_GeneralInformationPage extends BasePage {
   await this.page.locator(`//a[contains(text(),'${details.School}')]//ancestor::tr[1]//input[@class='CGP_deleted']`).click();
   await this.page.locator(this.applyChanges).first().click();
 
+}
+
+async verifyPageTitle(pageTitle) {
+    await this.page.locator(`xpath=(//span[text()="${pageTitle}"] | //*[@title="${pageTitle}"])`).waitFor({ state: 'visible', timeout: 20000 });
+    const title = await this.page.locator(this.pageTitle).innerText();
+    if (title !== pageTitle) {
+      throw new Error(`Expected page title to be "${pageTitle}", but got "${title}"`);
+    }
 }
   
 }

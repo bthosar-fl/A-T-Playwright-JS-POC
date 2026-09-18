@@ -22,7 +22,11 @@ class WebNavigatorPage {
        
     }
 
-    
+    async navigateToMainMenu(menu) {
+        await this.page.waitForTimeout(3000);
+        await this.page.locator(`//span[text()='${menu}']`).first().click();
+        await this.page.waitForTimeout(3000);
+    }
 }
 
 module.exports = { WebNavigatorPage };

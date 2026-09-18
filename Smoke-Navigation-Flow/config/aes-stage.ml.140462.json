@@ -11,7 +11,7 @@
   "username": "SSDManualSetup86_4",
   "testUsernames": {
     "org_username": "vtqamail+SSDManualSetupOU86ML@dev.frontlineed.com",
-    "campusUser": "vtqamail+multicuempssdML@dev.frontlineed.com",
+    "campusUser": "vtqamail+stage140463CU@dev.frontlineed.com",
     "employee": "vtqamail+SSD_EmployeeUserML@dev.frontlineed.com",
     "substitute": "vtqamail+SSDManualSetupSub86ML@dev.frontlineed.com"
   },
@@ -23,7 +23,7 @@
     "substitute": "Frontlinecitizen@1"
   },
   "userPriorities": {
-    "org_username": ["P1", "P2", "P3", "P4"],
+    "org_username": ["P1"],
     "campusUser": ["P1", "P2"],
     "employee": ["P2", "P4"],
     "substitute": ["P4"]

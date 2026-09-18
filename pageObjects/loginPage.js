@@ -46,7 +46,7 @@ class LoginPage {
   /**
    * Logs out the currently signed-in user.
    */
-  async logout() {
+  async logoutFromApp() {
     await this.page.locator(this.userInfoButton).click();
     await this.page.locator(this.logoutLink).click();
   }

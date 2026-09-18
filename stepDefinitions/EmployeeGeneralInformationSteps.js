@@ -40,6 +40,13 @@ Then('User delete employee if exist for user last name {string}', async function
   await this.employeeGeneralInfoPage.searchAndDeleteEmployee(lastName);
 });
 
+Then('User verifies page title as {string}', async function (pageTitle) {
+  this.employeeGeneralInfoPage = new employeeGeneralInfoPage(this.page);
+  //await this.employeeGeneralInfoPage.verifyPageTitle(pageTitle);
+});
+
+
+
 
 
 

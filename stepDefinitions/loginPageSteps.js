@@ -27,6 +27,14 @@ When('User logs in using {string}', async function (userKey) {
   await this.loginPage.loginToApp(credentials.username, credentials.password);
 });
 
+When('User logged out from the application', async function () {
+  const key = process.env.SMOKE_USER;
+  console.log(`[Smoke] Step: User logged out using userKey="${key}"`);
+  const credentials = getCredentials(key);
+  console.log(`[Smoke] Step: calling logout for "${credentials.username}"`);
+  await this.loginPage.logoutFromApp();
+});
+
 Then('User is logged in successfully and is redirected to application homepage', async function () {
   //await this.page.getByRole('menuitem', { name: 'Reference Data' }).waitFor({ state: 'visible', timeout: 20000 });
   await this.page.waitForSelector("//*[contains(text(),'Absence Management')]", { state: 'visible', timeout: 20000 });

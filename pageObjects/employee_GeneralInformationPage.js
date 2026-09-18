@@ -3,6 +3,7 @@ const BasePage = require('./basePage');
 class Employee_GeneralInformationPage extends BasePage {
   constructor(page) {
     super(page);
+    this.pageTitle = '//span[@title="Employee Search"]',
     this.searchTextBox = "//form[@name='search']//input[@type='text']";
     this.goButton = "//form[@name='search']//input[@type='submit']";
     this.searchEmployeeTextBox = "//input[@id='mask' or @name='mask']";
@@ -120,6 +121,32 @@ async searchAndDeleteEmployee(lastName){
       await this.page.locator(this.deleteEmployeeSuccessMsg).waitFor({ state: 'visible', timeout: 20000 });
     }
   }
+
+  async verifyPageTitle(pageTitle) {
+    const selector = `xpath=(//span[text()="${pageTitle}"] | //*[@title="${pageTitle}"])`;
+    const locator = this.page.locator(selector).first();
+    await locator.waitFor({ state: 'visible', timeout: 20000 });
+
+    let actual = '';
+    try {
+      actual = (await locator.innerText()).trim();
+    } catch (e) {
+      actual = '';
+    }
+
+    if (!actual) {
+      try {
+        const titleAttr = await locator.getAttribute('title');
+        if (titleAttr) actual = titleAttr.trim();
+      } catch (e) {
+        // ignore
+      }
+    }
+
+    if (actual !== pageTitle) {
+      throw new Error(`Expected page title to be "${pageTitle}", but got "${actual}"`);
+    }
+}
 
 
 }

@@ -7,3 +7,8 @@ Then('User navigate from {string} menu option to {string} sub menu to {string}',
   this.webNavigatorPage = new WebNavigatorPage(this.page);
   await this.webNavigatorPage.navigateToSubMenu(menu, submenu, tab);
 });
+
+Then('User navigate to {string}', async function (menu) {
+  this.webNavigatorPage = new WebNavigatorPage(this.page);
+  await this.webNavigatorPage.navigateToMainMenu(menu);
+});
